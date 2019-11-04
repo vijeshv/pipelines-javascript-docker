@@ -1,0 +1,41 @@
+# Docker
+# Build a Docker image 
+# https://docs.microsoft.com/azure/devops/pipelines/languages/docker
+
+trigger:
+- master
+
+resources:
+- repo: self
+
+variables:
+  tag: '$(Build.BuildId)'
+
+stages:
+- stage: Review
+  displayName: Run load
+  jobs:
+  - job: Review
+    displayName: Review
+    variables:
+      PROJECT_NAME: "sdsd"
+    pool:
+      vmImage: 'úbuntu-latest'
+    container: thelazycoder/neoload-controller-cli
+    steps:
+    - script: /bin/sh /home/neoload/entrypoint.sh
+- stage: Build
+  displayName: Build image
+  jobs:  
+  - job: Build
+    displayName: Build
+    pool:
+      vmImage: 'ubuntu-latest'
+    steps:
+    - task: Docker@2
+      displayName: Build an image
+      inputs:
+        command: build
+        dockerfile: '**/Dockerfile'
+        tags: |
+          $(tag)
