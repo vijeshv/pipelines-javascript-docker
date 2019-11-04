@@ -22,9 +22,7 @@ stages:
     pool:
       vmImage: 'ubuntu-18.04'
     steps:
-    - script: docker run -d --rm \
-        -e MODE=Managed \
-        neotys/neoload-controller
+    - script: docker run -d --rm -e MODE=Managed neotys/neoload-controller
 - stage: Build
   displayName: Build image
   jobs:  
