@@ -21,7 +21,7 @@ stages:
       PROJECT_NAME: "sdsd"
     pool:
       vmImage: 'úbuntu-latest'
-    container: thelazycoder/neoload-controller-cli
+    container: thelazycoder/neoload-controller-cli:latest
     steps:
     - script: /bin/sh /home/neoload/entrypoint.sh
 - stage: Build
