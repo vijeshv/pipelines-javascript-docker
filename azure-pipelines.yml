@@ -20,7 +20,7 @@ stages:
     variables:
       PROJECT_NAME: "sdsd"
     pool:
-      vmImage: 'úbuntu-18.04'
+      vmImage: 'ubuntu-18.04'
     container: thelazycoder/neoload-controller-cli:latest
     steps:
     - script: /bin/sh /home/neoload/entrypoint.sh
