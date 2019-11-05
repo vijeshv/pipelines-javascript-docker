@@ -21,8 +21,7 @@ stages:
       PROJECT_NAME: "sdsd"
     pool:
       vmImage: 'ubuntu-18.04'
-    steps:
-    - script: docker run --rm -e MODE=Managed neotys/neoload-controller
+      container: neoload_runner
 - stage: Build
   displayName: Build image
   jobs:  
