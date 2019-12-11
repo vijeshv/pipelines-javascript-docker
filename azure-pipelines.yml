@@ -21,7 +21,7 @@ stages:
       PROJECT_NAME: "sdsd"
     pool:
       vmImage: 'ubuntu-18.04'
-      container: neoload_runner
+      container: neoload_runner1
 - stage: Build
   displayName: Build image
   jobs:  
