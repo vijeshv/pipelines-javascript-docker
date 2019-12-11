@@ -1,27 +1,52 @@
-# Docker
-# Build a Docker image 
-# https://docs.microsoft.com/azure/devops/pipelines/languages/docker
-
-trigger:
-- master
-
-resources:
-- repo: self
+trigger: none
 
 variables:
-  tag: '$(Build.BuildId)'
+  nlw_token: $(secret_nlw_token)
+  zone_code: pimnV
+  wksp: $(Pipeline.Workspace)/s
+  zip_file_url: "https://github.com/paulsbruce/neoload-as-code/raw/NewExamplesRuntime/projects/example_2_0_runtime/Archive.zip"
+
+resources:
+  containers:
+  - container: neoload_runner
+    image: neotys/neoload-web-test-launcher
+    volumes:
+    - /home/vsts/work/1/s/neoload_project:/neoload-project
+    env: { 
+      NEOLOADWEB_TOKEN: $(nlw_token), 
+      CONTROLLER_ZONE_ID: $(zone_code), 
+      LG_ZONE_IDS: "$(zone_code):1",
+      TEST_RESULT_NAME: Azure Runner,
+      SCENARIO_NAME: sanityScenario
+    }
 
 stages:
-- stage: Review
-  displayName: Run load
+- stage: PullNLProject
+  displayName: Grab public sample NeoLoad project
   jobs:
-  - job: Review
-    displayName: Review
-    variables:
-      PROJECT_NAME: "sdsd"
+  - job: Pull
+    displayName: Pull
     pool:
-      vmImage: 'ubuntu-18.04'
-      container: neoload_runner1
-      steps:
-      - script: docker run --rm -e MODE=Managed neotys/neoload-web-test
-      
+      vmImage: 'ubuntu-16.04'
+    steps:
+    - bash: |
+        rm -rf $(wksp)/neoload_project
+        mkdir $(wksp)/neoload_project
+        curl $(zip_file_url) --output $(wksp)/neoload_project/project.zip
+        
+- stage: Runner
+  displayName: Run NeoLoad project
+  jobs:
+  - job: Run
+    displayName: Run
+    pool:
+      vmImage: 'ubuntu-16.04'
+    container: neoload_runner
+    steps:
+    - bash: |
+        uname
+        ls -latr /
+        ls -latr /usr/share/
+        which java
+    - bash: |
+        exec /usr/local/openjdk-11/bin/java $JAVA_OPTS -jar /usr/share/neoload-web-test-launcher/neoload-web-test-launcher.jar
