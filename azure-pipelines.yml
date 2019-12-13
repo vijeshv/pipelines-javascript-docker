@@ -40,3 +40,12 @@ stages:
       vmImage: 'ubuntu-18.04'
       container: neoload_runner1
       steps:
+      - script: |
+         docker run --rm \
+            -v "$(Build.Repository.LocalPath)/neoload-project/archive":/neoload-project \
+            -e SCENARIO_NAME=smoke-test \
+            -e NEOLOADWEB_TOKEN=<Your Token> \
+            -e TEST_NAME=CI-smoke \
+            -e CONTROLLER_ZONE_ID=<Your ZoneID>  \
+            -e LG_ZONE_IDS=<ZoneID#1>:<LG count#1>, <ZoneID#2>:<LG count#2>  \
+            neotys/neoload-web-test-launcher:latest
