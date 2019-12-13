@@ -48,4 +48,4 @@ stages:
               -e TEST_NAME=CI-smoke \
               -e CONTROLLER_ZONE_ID=<Your ZoneID>  \
               -e LG_ZONE_IDS=ZoneID:LG count1,ZoneID2>:LG count2  \
-               neotys/neoload-web-test-launcher:latest
+              neotys/neoload-web-test-launcher:latest;
