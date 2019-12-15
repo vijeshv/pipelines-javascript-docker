@@ -10,11 +10,10 @@ resources:
 
 variables:
   tag: '$(Build.BuildId)'
-  variables:
   nlw_token: $(secret_nlw_token)
   zone_code: pimnV
   wksp: $(Pipeline.Workspace)/s
-  zip_file_url: "https://github.com/paulsbruce/neoload-as-code/raw/NewExamplesRuntime/projects/example_2_0_runtime/Archive.zip"
+  zip_file_url: "https://github.com/vijeshv/azuredevops/blob/master/Amex-master.zip"
 
 stages:
 - stage: PullNLProject
@@ -41,11 +40,11 @@ stages:
       container: neoload_runner1
       steps:
       - script: |
-         docker run --rm \
+         docker run -t --rm \
             -v "$(Build.Repository.LocalPath)/neoload-project/archive":/neoload-project \
             -e SCENARIO_NAME=smoke-test \
-            -e NEOLOADWEB_TOKEN=<Your Token> \
+            -e NEOLOADWEB_TOKEN=$(nlw_token) \
             -e TEST_NAME=CI-smoke \
-            -e CONTROLLER_ZONE_ID=<Your ZoneID>  \
-            -e LG_ZONE_IDS=<ZoneID#1>:<LG count#1>, <ZoneID#2>:<LG count#2>  \
+            -e CONTROLLER_ZONE_ID=GcRHw \
+            -e LG_ZONE_IDS=GcRHw:1 \
             neotys/neoload-web-test-launcher:latest
