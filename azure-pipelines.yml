@@ -41,8 +41,8 @@ stages:
       steps:
       - script: |
          docker run -t --rm \
-            -v "$(Build.Repository.LocalPath)/neoload-project/archive":/neoload-project \
-            -e SCENARIO_NAME=smoke-test \
+            -v "$(wksp)/neoload_project":/neoload-project \
+            -e SCENARIO_NAME=jenkinsscenario \
             -e NEOLOADWEB_TOKEN=$(nlw_token) \
             -e TEST_NAME=CI-smoke \
             -e CONTROLLER_ZONE_ID=GcRHw \
