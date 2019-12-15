@@ -13,7 +13,7 @@ variables:
   nlw_token: $(secret_nlw_token)
   zone_code: pimnV
   wksp: $(Pipeline.Workspace)/s
-  zip_file_url: "https://github.com/vijeshv/azuredevops/blob/master/Amex-master.zip"
+  zip_file_url: "https://raw.githubusercontent.com/vijeshv/azuredevops/master/Amex-master.zip"
 
 stages:
 - stage: PullNLProject
